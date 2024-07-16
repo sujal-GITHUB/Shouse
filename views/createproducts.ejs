@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <%- include('./partials/header') %>
+    <% if(success && success.length>0){ %>
+        <div class="flash absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 mt-5 rounded-full bg-green-500">
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%= success %>
+            </span>
+        </div>
+        <% } else if(error && error.length>0){  %>
+        <div class="flash absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 mt-5 rounded-full bg-red-500">
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%= error %>
+            </span>
+        </div>
+        <% } %>
+
+            <div class="min-h-screen border-2 border-yellow-500 rounded-lg flex flex-col">
+                <div class="container px-10 py-20 text-white flex flex-grow">
+                    <div class="w-[25%] flex h-screen flex-col items-start">
+                        <div class="flex flex-col">
+                            <a class="block w-fit mb-2" href="">All Products</a>
+                            <a class="block w-fit mb-2" href="">Create new product</a>
+                        </div>
+                    </div>
+                    <main class="w-3/4 bg-zinc-800 rounded-lg p-8 shadow ml-4">
+                        <h2 class="text-3xl font-bold mb-10">Create New Product</h2>
+                        <form autocomplete="off" action="/products/create" method="post" enctype="multipart/form-data">
+                            <div class="mb-10">
+                                <h3 class="text-lg font-semibold text-yellow-500 mb-4">Product Details</h3>
+                                <div class="mb-4 flex items-center">
+                                    <label class="block mb-2 mr-4">Product Image : </label>
+                                    <input name="image" type="file" class="py-2 bg-zinc-700 px-4 rounded-md" value="Select File">
+                                </div>
+                                <div class="grid rounded-md grid-cols-2 gap-4">
+                                    <input name="name" type="text" placeholder="Product Name"
+                                        class="border p-2 rounded w-full">
+                                    <input name="price" type="text" placeholder="Product Price"
+                                        class="border p-2 rounded w-full">
+                                    <input name="discount" type="text" placeholder="Discount Price"
+                                        class="border p-2 rounded w-full">
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="text-lg font-semibold text-yellow-500 mb-2">Panel Details</h3>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <input name="bgcolor" type="text" placeholder="Background Color"
+                                        class="border p-2 rounded w-full">
+                                    <input name="panelcolor" type="text" placeholder="Panel Color"
+                                        class="border p-2 rounded w-full">
+                                    <input name="textcolor" type="text" placeholder="Text Color"
+                                        class="border p-2 rounded w-full">
+                                </div>
+                            </div>
+                            <input class="px-5 py-2 rounded mt-3 bg-blue-500 text-white" type="submit"
+                                value="Create New Product">
+                        </form>
+                    </main>
+                </div>
+            </div>
+            <%- include('./partials/footer') %>
+
+            <script>
+                setTimeout(function() {
+                    const flashMessage = document.querySelector('.flash');
+                    if (flashMessage) {
+                        flashMessage.style.transition = 'opacity 1s';
+                        flashMessage.style.opacity = '0';
+                        setTimeout(() => flashMessage.remove(), 1000); 
+                    }
+                }, 3000);
+            </script>
+</body>
+</html>

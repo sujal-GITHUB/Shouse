@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <%- include('./partials/header') %>
+        <div class="min-h-screen border-2 border-yellow-500 rounded-lg flex flex-col">
+            <div class="container px-10 py-20 text-white flex flex-grow">
+                <div class="w-[25%] flex h-screen flex-col items-start">
+                    <div class="flex flex-col">
+                        <a class="block w-fit mb-2" href="">All Products</a>
+                        <a class="block w-fit mb-2" href="">Create new product</a>
+                    </div>
+                </div>
+                <main class="w-3/4 bg-zinc-800 rounded-lg p-8 shadow ml-4">
+                    <h2 class="text-3xl font-medium mb-10">User Details</h2>
+                            <div class="bg-zinc-900 flex p-10 min-h-screen rounded-lg">
+                                <div class="w-1/2 rounded-md" id="formContainer">
+                                    <div class="form-control p-2 flex justify-around bg-zinc-800 m-2 rounded-md">
+                                        <label for="name">Name:</label>
+                                        <input class="px-2 rounded-md" type="text" id="firstName" value="<%= user.fullname %>" disabled>
+                                    </div>
+                                    <div class="p-2 flex justify-around bg-zinc-800 m-2 rounded-md">
+                                        <label for="email">Email:</label>
+                                        <input class="px-2 rounded-md" type="text" id="firstName" value="<%= user.email %>" disabled>
+                                    </div>
+                                    <div class="p-2 flex justify-around bg-zinc-800 m-2 rounded-md">
+                                        <label for="orders">Orders:</label>
+                                        <input class="px-2 rounded-md" type="text" id="firstName" value="<%= user.cart.length %>" disabled>
+                                    </div>
+                                    <div class="p-2 px-3 flex justify-around bg-zinc-800 m-2 rounded-md">
+                                        <label for="contact">Contact:</label>
+                                        <input class="px-2 rounded-md" type="text" id="firstName" value="<%= user.contact %>" disabled>
+                                    </div>
+                                    <button class="m-3 bg-blue-500 px-10 py-1 rounded-md" id="editButton">Edit</button>
+                                </div>
+                                <div class="w-1/2 h-1/2 flex flex-col items-center justify-center rounded-md">
+                                    <img id="pfp" class="h-[16rem] bg-zinc-700 w-1/2 rounded-md" src="<%= user.image ? 'data:image/jpeg;base64,' + user.image.toString('base64') : '/images/user.png' %>" %>"
+                                    alt="">
+                                    <h3 class="text-lg mt-5 font-semibold text-yellow-500 mb-2">Change Image</h3>
+                                        <form action="/admin/uploadimage" method="post" enctype="multipart/form-data">
+                                            <div class="ml-[15%] mr-2 flex items-center">
+                                            <input name="image" type="file" class="py-2 text-sm bg-zinc-700 pl-2 pr-2 rounded-md" value="Select File">
+                                            <input class="text-3xl bg-zinc-800 px-3 py-1 rounded-md ml-2" type="submit" value="⬆">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                </main>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById('editButton').addEventListener('click', function() {
+                var inputs = document.querySelectorAll('#formContainer input');
+                inputs.forEach(function(input) {
+                    input.disabled = !input.disabled;
+                });
+            });
+
+            var changeButton = document.getElementById('editButton')
+            var ot = changeButton.innerText
+            var newT = 'Submit'
+
+            document.getElementById('editButton').addEventListener('click', ()=>{  
+                if (changeButton.innerText === ot) {
+                    changeButton.innerText = newT;
+                } else {
+                    changeButton.innerText = ot;
+                }
+            })
+
+        </script>
+
+    <%- include('./partials/footer') %>
+</body>
+</html>

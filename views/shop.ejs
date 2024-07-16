@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <%- include('./partials/header') %>
+
+    <% if(success && success.length>0){ %>
+        <div class="flash absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 mt-5 rounded-full bg-green-500">
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%= success %>
+            </span>
+        </div>
+        <% } else if(error && error.length>0){  %>
+        <div class="flash absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 mt-5 rounded-full bg-red-500">
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%= error %>
+            </span>
+        </div>
+        <% } %>
+
+    <div class="w-full h-auto border-2 border-yellow-400 rounded-lg flex items-start px-20 py-20">
+        <div class="w-[25%] flex flex-col items-start">
+            <div class=" border-2 border-zinc-500 p-8 text-md font-normal bg-zinc-800 shadow-lg backdrop-filter backdrop-blur-sm border-opacity-25 rounded-xl text-white">
+                <div class="flex items-center gap-2">
+                    <h3>Sort by : </h3>
+                    <form action="/shop">
+                        <select class="border-[1px] px-2 py-1 text-black rounded-md"name="sortby" id="">
+                            <option value="popular">Popular</option>
+                            <option value="newest">Newest</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="flex flex-col mt-20">
+                    <a class="block w-fit mb-2" href="">New Collection</a>
+                    <a class="block w-fit mb-2" href="">All Products</a>
+                    <a class="block w-fit mb-2" href="">Discounted Products</a>
+                </div>
+                <div class="mt-32">
+                    <a class="block w-fit mb-2" href="">Filter by :</a>
+                    <a class="block w-fit mb-2" href="">Availability</a>
+                    <a class="block w-fit mb-2" href="">Discount</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-[75%] sm:w-full flex justify-center flex-wrap gap-20 h-auto">
+            <% products.forEach(function(product){ %>
+                <div class="w-60 border-yellow-400 transorm transition-transform duration-200 hover:scale-[130%] rounded-lg border-2">
+                    <div class="w-full rounded-tl-md rounded-tr-md h-52 flex items-center justify-center bg-[<%= product.bgcolor %>]">
+                        <img class="h-[12rem]" src="data:image/jpeg;base64,<%= product.image.toString('base64') %>"
+                            alt="">
+                    </div>
+                    <div class="flex rounded-bl-md rounded-br-md justify-between bg-[<%= product.panelcolor %>] items-center px-4 py-4 text-[<%= product.textcolor %>]">
+                        <div class="w-full">
+                            <h3><%= product.name %></h3>
+                            <div>
+                                <h4>₹ <%= product.price %></h4>
+                                <h4 class="w-3/4"><div class="bg-[#d3d6db] px-5 rounded-lg text-black mt-3"><%= product.discount %>% off</div></h4>
+                            </div>
+                        </div>
+                        <a class="w-7 h-7 flex items-center justify-center text-[#606470] font-bold rounded-full bg-white" href="/addtocart/<%= product._id %>">
+                            <i class="ri-add-line"></i>
+                        </a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    
+    <%- include('./partials/footer') %>
+
+    <script>
+        setTimeout(function() {
+            const flashMessage = document.querySelector('.flash');
+            if (flashMessage) {
+                flashMessage.style.transition = 'opacity 1s';
+                flashMessage.style.opacity = '0';
+                setTimeout(() => flashMessage.remove(), 1000); 
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

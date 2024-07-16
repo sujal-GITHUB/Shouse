@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <%- include('./partials/header') %>
+    <% if(error.length>0){ %>
+        <div class="flash absolute top-5 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 mt-5 rounded-full bg-red-500" >
+            <span class="inline-block mt-1 mb-1 text-white">
+                <%= error %>
+            </span>
+        </div>
+        <% } %>
+    <div class="w-full bg-cover bg-center bg-no-repeat min-h-screen rounded-lg flex px-20" style="background-image: url('/images/bg.jpg');">
+        <div class="w-3/4 flex items-center justify-center h-screen">
+            <div class="w-full px-32">
+                <h4 class="text-4xl text-white capitalize mb-5">Owner Access</h4>
+                <form action="owners/create" method="post">
+                    <input class="block bg-zinc-100 w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
+                        type="email" placeholder="Email" name="email">
+                    <input class="block bg-zinc-100 w-full px-3 py-2 border-[1px] rounded-md mb-3 border-zinc-200"
+                        type="password" placeholder="Password" name="password">
+                    <input class="px-10 rounded-full py-3 mt-2 bg-blue-500 text-white" type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+        <div class="flex justify-center w-3/4 items-center">
+            <img src="images/owner.png" alt="" width="40%">
+        </div>
+    </div>
+    <%- include('./partials/footer') %>
+
+    <script>
+        setTimeout(function() {
+            const flashMessage = document.querySelector('.flash');
+            if (flashMessage) {
+                flashMessage.style.transition = 'opacity 1s';
+                flashMessage.style.opacity = '0';
+                setTimeout(() => flashMessage.remove(), 1000); 
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shouse</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+<body class="font-sans bg-black px-5">
+    <nav class="w-full flex justify-between py-3">
+        <% var ownerlogin; %>
+        <% var loggedin = typeof loggedin !== "undefined" ? loggedin : true %>
+        <h3 class="text-4xl text-yellow-400 font-md transorm transition-transform duration-200 hover:scale-110 "><a <% if(loggedin)%> ? href="/shop" : href="/">Shouse</a></h3>
+        <% var loggedin = typeof loggedin !== "undefined" ? loggedin : true %>
+        <% if(loggedin){ %>
+            <% if(ownerlogin === true){%>
+                <a href="/owners" class="bg-red-500 flex justify-center items-center px-3 rounded-md text-white">User Login</a>
+            <%} else{%>
+                <div class="right flex gap-10 text-zinc-500 text-xl">
+                    <a class="hover:text-white " href="/shop">Shop</a>
+                    <a class="hover:text-white " href="/cart">Cart</a>
+                    <a class="hover:text-white " href="/admin">My Account</a>
+                    <a class="transorm transition-transform duration-200 hover:scale-110 hover:font-semibold text-red-500" href="/users/logout">Logout</a>
+                </div>
+            <%}%>
+        <%}else{%>
+                <% ownerlogin = typeof ownerlogin !== "undefined" ? ownerlogin : true %>
+                <a href="/owners" class="bg-slate-700 flex justify-center items-center px-3 rounded-md text-white">Owner Login</a>
+            <%}%>
+    </nav>
